@@ -1,0 +1,6 @@
+config.js
+*.swp
+*~
+.*
+*.db
+*.db.empty

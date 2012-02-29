@@ -1,0 +1,25 @@
+var oauth = {
+    requestTokenURI   : 'http://fanfou.com/oauth/request_token',
+    accessTokenURI    : 'http://fanfou.com/oauth/access_token',
+    authorizeTokenURI : 'http://fanfou.com/oauth/authorize',
+    signatureMethod   : 'HMAC-SHA1',
+    consumerKey       : 'YOUR_API_KEY',
+    consumerSecret    : 'YOUR_API_SECRET',
+    callbackURI       : 'http://YOUR_HOST:YOUR_PORT/verify',
+};
+
+module.exports = {
+    oauth : oauth,
+    server: "api.fanfou.com",
+    httpd : {
+        port : 8080,
+        host : "0.0.0.0",
+    },
+    cookies:{
+        key: "Ku1GWjPCpvm0ko",
+    },
+    session : {
+        timeout: 3600000,
+        key: "Zat_8CEy4CA4lV",
+    },
+}
