@@ -16,8 +16,11 @@ function login(req,resp){
     req.session.set("OAuth",oa);
     oa.acquireRequestToken(null, function(oa){
     	if(!oa.statusCode){
+    	    var oauth_callback = "http://"+req.headers['host']+"/verify";
             resp.end("<html><body><a href=\'"+
-            oa.getAuthorizeTokenURI()+
+            oa.getAuthorizeTokenURI({
+            	'oauth_callback': oauth_callback
+            })+
             "\'>Click here to login with OAuth</a></body></html>");
         }else{
             resp.writeHead(500);
