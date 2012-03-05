@@ -139,7 +139,7 @@ function reset_passwd(req,resp) {
 }
 
 function randomString() {
-	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz!@#^&*()_+";
+	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
 	var string_length = 16;
 	var randomstring = '';
 	for (var i=0; i<string_length; i++) {
