@@ -5,5 +5,5 @@ cd libs
 cd ..
 echo =============================================================
 echo "Please edit config.js.template and save as config.js"
-echo "Please rename file oauth_token.db.empty to oauth_token.dn"
+echo "Please rename file oauth_token.db.empty to oauth_token.db"
 echo =============================================================
