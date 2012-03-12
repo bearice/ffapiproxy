@@ -186,6 +186,12 @@ function getOAuthParam(auth,cb){
     });
 }
 function proxy(req,resp){
+    if(config.filter && !(config.filter.test(req.url))){
+    	resp.writeHead(403, { "X-Error": "filtered by admin" });
+        resp.end();
+        console.info("Forbidden: "+req.url);
+        return;
+    }
     var postData = null;
     var contentLength;
     if(req.method=="POST"){
