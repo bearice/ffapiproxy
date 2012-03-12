@@ -5,12 +5,13 @@ var oauth = {
     signatureMethod   : 'HMAC-SHA1',
     consumerKey       : 'YOUR_API_KEY',
     consumerSecret    : 'YOUR_API_SECRET',
-    callbackURI       : 'http://YOUR_HOST:YOUR_PORT/verify',
+    //callbackURI       : 'http://YOUR_HOST:YOUR_PORT/verify',
 };
 
 module.exports = {
     oauth : oauth,
     server: "api.fanfou.com",
+    filter: /^\/statuses\/update/,
     httpd : {
         port : 8080,
         host : "0.0.0.0",
