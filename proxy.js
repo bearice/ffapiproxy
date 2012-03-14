@@ -17,10 +17,11 @@ function login(req,resp){
     oa.acquireRequestToken(null, function(oa){
     	if(!oa.statusCode){
     	    var oauth_callback = "http://"+req.headers['host']+"/verify";
-            resp.end("<html><body><a href=\'"+
-            oa.getAuthorizeTokenURI({
+            var oauth_url = oa.getAuthorizeTokenURI({
             	'oauth_callback': oauth_callback
-            })+
+            });
+            resp.writeHead(301,{'location':oauth_url});
+            resp.end("<html><body><a href=\'"+ oauth_url +
             "\'>Click here to login with OAuth</a></body></html>");
         }else{
             resp.writeHead(500);

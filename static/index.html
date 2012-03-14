@@ -1,7 +1,25 @@
 <html>
     <head>
+        <meta charset="utf-8" />
         <title>Fanfou API Proxy</title>
         <style>
+        body {
+            background: #ACDAE5 url(http://static2.fanfou.com/img/bg/0.png) no-repeat 0 0;
+            color: #222;
+            font-size: 120%;
+            line-height: 150%;
+            display: block;
+        }
+        #container {
+            padding-top: 1.25em;
+            width: 800px; margin: auto;
+            background: white;
+            border-radius: 8px;
+            padding: 8px;
+        }
+        input {
+            width: 100%;
+        }
         </style>
         <script src="static/jquery.js"></script>
         <script>
@@ -13,7 +31,7 @@
                         $("#username").html(htmlencode(data.name));
                         if(data.passwd)$("#password").html(htmlencode(data.passwd));
                         $("#oauth").attr("disabled",false);
-                        $('#curl').html(htmlencode("curl -u'"+data.name+":"+data.passwd+"' "+window.location.host + "/account/verify_credentials.json"));
+                        $('#curl').html("<input value='"+htmlencode("curl -u'"+data.name+":"+data.passwd+"' "+window.location.host + "/account/verify_credentials.json")+"'>");
                     }else{
                         $("#login").show();
                     }
@@ -30,8 +48,9 @@
         </script>
     </head>
     <body>
+        <div id="container" >
         <div id='init'><img src='static/loading.gif' style="display:none"></img>Loading...</div>
-        <div id='login' style="display:none"><a href="/login">Login with OAuth</a></div>
+        <div id='login' style="display:none"><a href="/login"><center><h1>Login with OAuth</h1></center></a></div>
         <div id='userinfo' style="display:none">
             用户名:<span id='username'></span><br/>
             随机密码:<span id='password'>未生成</span><br/>
@@ -39,5 +58,6 @@
             <a href="/logout">退出登陆</a>
         </div>
         <span id='curl'></span>
+        </div>
     </body>
 </html>
