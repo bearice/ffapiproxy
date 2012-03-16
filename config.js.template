@@ -11,6 +11,7 @@ var oauth = {
 module.exports = {
     oauth : oauth,
     server: "api.fanfou.com",
+    pwdLen: 8,
     //filter: /^\/statuses\/update/,
     httpd : {
         port : 8080,

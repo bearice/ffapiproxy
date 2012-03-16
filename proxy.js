@@ -16,7 +16,7 @@ function login(req,resp){
     req.session.set("OAuth",oa);
     oa.acquireRequestToken(null, function(oa){
     	if(!oa.statusCode){
-    	    var oauth_callback = "http://"+req.headers['host']+"/verify";
+    	    var oauth_callback = config.oauth.callbackURI || "http://"+req.headers['host']+"/verify";
             var oauth_url = oa.getAuthorizeTokenURI({
             	'oauth_callback': oauth_callback
             });
@@ -141,7 +141,7 @@ function reset_passwd(req,resp) {
 
 function randomString() {
 	var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-	var string_length = 16;
+	var string_length = config.pwdLen || 16;
 	var randomstring = '';
 	for (var i=0; i<string_length; i++) {
 		var rnum = Math.floor(Math.random() * chars.length);
@@ -166,7 +166,7 @@ function saveOAuthParam(oa){
 
 function getOAuthParam(auth,cb){
     if(!/^Basic [0-9a-zA-Z=+\/]+$/.test(auth)){
-        console.info("Bad auth:",auth);
+        //console.info("Bad auth:",auth);
         cb(null);
         return;
     }
@@ -234,10 +234,13 @@ function proxy(req,resp){
             cReq.host = config.server;
             cReq.port = 80;
             cReq.path = req.url;
-            cReq.headers = {
-                "X-Forwarded-For": req.connection.remoteAddress,
-            };
-            
+            cReq.headers = {}
+            for(k in req.headers){
+            	if(!/^host|connection|x-forwarded-for|accept-encoding|cookie$/.test(k))
+                    cReq.headers[k] = req.headers[k];
+            }
+            cReq.headers ["X-Forwarded-For"]=req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+             
             if(oa){
                 var _url = "http://"+config.server+req.url;
                 var param = req.info.query;
@@ -260,7 +263,7 @@ function proxy(req,resp){
                 cReq.headers['Content-Length'] = req.headers['content-length'];
             }
 
-            //console.info(cReq);
+//            console.info(cReq);
             http.request(cReq, function(cres) {
                 cres.on('error',function(e){
                     resp.writeHead(502, { "X-Error": "Bad Gateway" });
